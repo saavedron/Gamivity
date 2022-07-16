@@ -6,12 +6,12 @@ using API.Data;
 using Microsoft.AspNetCore.Mvc;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class StudentsController : ControllerBase
+
+    public class StudentsController : BaseApiController
     {
         private readonly DataContext _context;
         public StudentsController(DataContext context)
@@ -20,6 +20,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
             return await _context.Students.ToListAsync();
@@ -27,6 +28,7 @@ namespace API.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
