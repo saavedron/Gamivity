@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220717235018_Classes")]
+    partial class Classes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +35,12 @@ namespace API.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentID");
 
                     b.ToTable("Classes");
                 });
@@ -94,19 +101,15 @@ namespace API.Data.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("API.Entities.StudentClass", b =>
+            modelBuilder.Entity("API.Entities.Class", b =>
                 {
-                    b.Property<int>("StudentID")
-                        .HasColumnType("int");
+                    b.HasOne("API.Entities.Student", "Student")
+                        .WithMany("Classes")
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.HasKey("StudentID", "ClassId");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("StudentClasses");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("API.Entities.GeneralClass", b =>
@@ -120,25 +123,6 @@ namespace API.Data.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("API.Entities.StudentClass", b =>
-                {
-                    b.HasOne("API.Entities.Class", "Class")
-                        .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.Student", "Student")
-                        .WithMany("StudentClasses")
-                        .HasForeignKey("StudentID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("API.Entities.Class", b =>
                 {
                     b.Navigation("GeneralClass");
@@ -146,7 +130,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Student", b =>
                 {
-                    b.Navigation("StudentClasses");
+                    b.Navigation("Classes");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,32 +7,32 @@ using Microsoft.AspNetCore.Mvc;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using API.Interfaces;
 
 namespace API.Controllers
 {
-
+    [Authorize]
     public class StudentsController : BaseApiController
     {
-        private readonly DataContext _context;
-        public StudentsController(DataContext context)
+        private readonly IStudentRepository _studentRepository;
+
+        public StudentsController(IStudentRepository studentRepository)
         {
-            _context = context;
+            _studentRepository = studentRepository;
+
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
-            return await _context.Students.ToListAsync();
-
-
+            return Ok(await _studentRepository.GetStudentsAsync());
         }
 
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Student>> GetStudent(int id)
+
+        [HttpGet("{username}")]
+        public async Task<ActionResult<Student>> GetStudent(string username)
         {
-            return await _context.Students.FindAsync(id);
+            return await _studentRepository.GetStudentByUsernameAsync(username);
         }
     }
 }

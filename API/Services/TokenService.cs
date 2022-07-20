@@ -22,12 +22,14 @@ namespace API.Services
         public string CreateToken(Student student)
         {
             var claims = new List<Claim>{
+                new Claim(JwtRegisteredClaimNames.NameId, student.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.NameId, student.UserName)
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor{
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(7),
                 SigningCredentials = creds
