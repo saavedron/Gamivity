@@ -44,7 +44,7 @@ namespace API.Controllers
             return new StudentDto
             {
                 Username = student.UserName,
-                Token = _tokenService.CreateToken(student)
+                Token = _tokenService.CreateTokenStudent(student)
             };
         }
 
@@ -67,7 +67,7 @@ namespace API.Controllers
             return new StudentDto
             {
                 Username = student.UserName,
-                Token = _tokenService.CreateToken(student)
+                Token = _tokenService.CreateTokenStudent(student)
             };
         }
 

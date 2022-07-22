@@ -12,5 +12,6 @@ namespace API.Entities
         // public int StudentID { get; set; }
 
         public GeneralClass GeneralClass { get; set; }
+        public int GeneralClassId { get; set; }
     }
 }

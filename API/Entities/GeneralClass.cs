@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace API.Entities
 {
+    [Table("GeneralClasses")]
     public class GeneralClass
     {
         public int Id { get; set; }
@@ -7,9 +10,8 @@ namespace API.Entities
         public string Name { get; set; }
         public string Course { get; set; }
 
+        public ICollection<Class> Classes { get; set; }
 
-        public Class Class { get; set; }
-        public int ClassId { get; set; }
 
     }
 }

@@ -30,10 +30,15 @@ namespace API.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("GeneralClassId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GeneralClassId");
 
                     b.ToTable("Classes");
                 });
@@ -46,9 +51,6 @@ namespace API.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClassLevel")
                         .HasColumnType("int");
 
@@ -60,10 +62,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassId")
-                        .IsUnique();
-
-                    b.ToTable("GeneralClass");
+                    b.ToTable("GeneralClasses");
                 });
 
             modelBuilder.Entity("API.Entities.Student", b =>
@@ -96,28 +95,28 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.StudentClass", b =>
                 {
-                    b.Property<int>("StudentID")
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.HasKey("StudentID", "ClassId");
+                    b.HasKey("StudentId", "ClassId");
 
                     b.HasIndex("ClassId");
 
                     b.ToTable("StudentClasses");
                 });
 
-            modelBuilder.Entity("API.Entities.GeneralClass", b =>
+            modelBuilder.Entity("API.Entities.Class", b =>
                 {
-                    b.HasOne("API.Entities.Class", "Class")
-                        .WithOne("GeneralClass")
-                        .HasForeignKey("API.Entities.GeneralClass", "ClassId")
+                    b.HasOne("API.Entities.GeneralClass", "GeneralClass")
+                        .WithMany("Classes")
+                        .HasForeignKey("GeneralClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Class");
+                    b.Navigation("GeneralClass");
                 });
 
             modelBuilder.Entity("API.Entities.StudentClass", b =>
@@ -130,7 +129,7 @@ namespace API.Data.Migrations
 
                     b.HasOne("API.Entities.Student", "Student")
                         .WithMany("StudentClasses")
-                        .HasForeignKey("StudentID")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -139,9 +138,9 @@ namespace API.Data.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("API.Entities.Class", b =>
+            modelBuilder.Entity("API.Entities.GeneralClass", b =>
                 {
-                    b.Navigation("GeneralClass");
+                    b.Navigation("Classes");
                 });
 
             modelBuilder.Entity("API.Entities.Student", b =>

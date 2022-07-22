@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Interfaces;
@@ -21,7 +22,7 @@ namespace API.Controllers
             _studentRepository = studentRepository;
         }
 
-        [HttpPost("{name}")]
+        [HttpPost("addToClass/{name}")]
         public async Task<ActionResult> AddStudentToClass(string name)
         {
             var studentId = User.GetStudentId();
@@ -47,5 +48,14 @@ namespace API.Controllers
             return BadRequest("Failed joinind student");
 
         }
+
+        [HttpGet]
+
+        public async Task<ActionResult<IEnumerable<ClassDto>>> GetStudentClasses()
+        {
+            return Ok(await _classesRepository.GetStudentClasses(User.GetStudentId()));
+        }
+
+
     }
 }

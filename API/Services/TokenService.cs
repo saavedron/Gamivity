@@ -19,13 +19,18 @@ namespace API.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
 
-        public string CreateToken(Student student)
+        public string CreateTokenStudent(Student student)
         {
             var claims = new List<Claim>{
                 new Claim(JwtRegisteredClaimNames.NameId, student.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.NameId, student.UserName)
             };
 
+            return (CreateToken(claims));
+        }
+
+        public string CreateToken(List<Claim> claims)
+        {
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -41,6 +46,16 @@ namespace API.Services
 
             return tokenHandler.WriteToken(token);
 
+        }
+
+        public string CreateTokenTeacher(Teacher teacher)
+        {
+            var claims = new List<Claim>{
+                new Claim(JwtRegisteredClaimNames.NameId, teacher.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.NameId, teacher.UserName)
+            };
+
+            return (CreateToken(claims));
         }
     }
 }

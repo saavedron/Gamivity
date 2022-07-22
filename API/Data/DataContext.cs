@@ -14,7 +14,9 @@ namespace API.Data
         }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<GeneralClass> GeneralClasses { get; set; }
         public DbSet<Class> Classes { get; set; }
+
         public DbSet<StudentClass> StudentClasses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

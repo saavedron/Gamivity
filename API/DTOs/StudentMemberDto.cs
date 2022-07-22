@@ -6,12 +6,13 @@ using API.Entities;
 
 namespace API.DTOs
 {
-    public class ClassDto
+    public class StudentMemberDto
     {
         public int Id { get; set; }
+        public string UserName { get; set; }
+        public string EMail { get; set; }
         public string Name { get; set; }
 
-        // public Student Student { get; set; }
-        // public int StudentID { get; set; }
+        public ICollection<StudentClass> StudentClasses { get; set; }
     }
 }

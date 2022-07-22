@@ -32,6 +32,8 @@ namespace API.Data
             return await _context.StudentClasses.FindAsync(studentId, classID);
         }
 
+
+
         public async Task<IEnumerable<ClassDto>> GetStudentClasses(int studentId)
         {
             var students = _context.Students.AsQueryable();
@@ -44,9 +46,7 @@ namespace API.Data
             return await classes.Select(c => new ClassDto
             {
                 Id = c.Id,
-                Name = c.Name,
-                GeneralClass = c.GeneralClass
-
+                Name = c.Name
             }).ToListAsync();
         }
 

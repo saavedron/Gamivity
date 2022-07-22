@@ -2,16 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Entities;
 
 namespace API.DTOs
 {
-    public class ClassDto
+    public class GeneralClassDto
     {
         public int Id { get; set; }
+        public int ClassLevel { get; set; }
         public string Name { get; set; }
-
-        // public Student Student { get; set; }
-        // public int StudentID { get; set; }
+        public string Course { get; set; }
+        public ICollection<ClassDto> Classes { get; set; }
     }
 }

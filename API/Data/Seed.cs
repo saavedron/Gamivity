@@ -28,10 +28,14 @@ namespace API.Data
             var classData = await System.IO.File.ReadAllTextAsync("Data/SeedDataClass.json");
             var classes = JsonSerializer.Deserialize<List<Class>>(classData);
 
-            foreach (var _class in classes)
+            generalClasses.ForEach(c =>
             {
-                _class.GeneralClass = generalClasses[0];
-            }
+                c.Classes = classes;
+
+            });
+
+
+
             foreach (var student in students)
             {
                 using var hmac = new HMACSHA512();
@@ -47,6 +51,8 @@ namespace API.Data
 
             if (await context.Classes.AnyAsync()) return;
             context.Classes.AddRange(classes);
+            context.GeneralClasses.AddRange(generalClasses);
+
 
             await context.SaveChangesAsync();
 
