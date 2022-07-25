@@ -9,7 +9,7 @@ namespace API.DTOs
     {
         public int Id { get; set; }
         public int ClassLevel { get; set; }
-        public string Name { get; set; }
+        public string GeneralClassName { get; set; }
         public string Course { get; set; }
         public ICollection<ClassDto> Classes { get; set; }
     }

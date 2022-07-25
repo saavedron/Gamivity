@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 
 namespace API.Interfaces
@@ -15,6 +16,7 @@ namespace API.Interfaces
         Task<Student> GetStudentByIdAsync(int id);
         Task<Student> GetStudentByUsernameAsync(string username);
 
+        Task<StudentMemberDto> GetStudentMemberByUsernameAsync(string username);
 
     }
 }

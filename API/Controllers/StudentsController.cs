@@ -8,6 +8,8 @@ using API.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using API.Interfaces;
+using API.DTOs;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -15,24 +17,32 @@ namespace API.Controllers
     public class StudentsController : BaseApiController
     {
         private readonly IStudentRepository _studentRepository;
+        private readonly IMapper _mapper;
 
-        public StudentsController(IStudentRepository studentRepository)
+        public StudentsController(IStudentRepository studentRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _studentRepository = studentRepository;
 
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<StudentMemberDto>>> GetStudents()
         {
-            return Ok(await _studentRepository.GetStudentsAsync());
+            var students = await _studentRepository.GetStudentsAsync();
+
+            var studentsToReturn = _mapper.Map<IEnumerable<StudentMemberDto>>(students);
+            return Ok(studentsToReturn);
         }
 
 
         [HttpGet("{username}")]
-        public async Task<ActionResult<Student>> GetStudent(string username)
+        public async Task<ActionResult<StudentMemberDto>> GetStudent(string username)
         {
-            return await _studentRepository.GetStudentByUsernameAsync(username);
+
+            return await _studentRepository.GetStudentMemberByUsernameAsync(username);
         }
+
+
     }
 }
