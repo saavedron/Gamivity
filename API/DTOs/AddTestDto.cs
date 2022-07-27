@@ -6,11 +6,11 @@ using API.Entities;
 
 namespace API.DTOs
 {
-    public class StudentClassDto
+    public class AddTestDto
     {
 
-        public ClassDto Class { get; set; }
-
+        public Test Test { get; set; }
+        public string ClassName { get; set; }
 
     }
 }

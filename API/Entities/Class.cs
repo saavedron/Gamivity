@@ -8,10 +8,12 @@ namespace API.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
-        // public Student Student { get; set; }
-        // public int StudentID { get; set; }
+        //  public Student Student { get; set; }
+        //public int StudentID { get; set; }
 
         public GeneralClass GeneralClass { get; set; }
         public int GeneralClassId { get; set; }
+
+        public ICollection<ClassTest> ClassTests { get; set; }
     }
 }

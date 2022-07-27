@@ -14,7 +14,11 @@ namespace API.Interfaces
 
         Task<IEnumerable<ClassDto>> GetStudentClasses(int studentId);
 
-        Task<ClassDto> GetClassByName(string name);
+        Task<Class> GetClassByName(string name);
+
+        Task<bool> UpdateAndSaveGeneralClass(GeneralClass generalClass);
+
+        Task<bool> SaveAllAsync();
 
 
 

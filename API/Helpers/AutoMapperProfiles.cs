@@ -12,11 +12,13 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
-      
+
             CreateMap<GeneralClass, GeneralClassDto>();
             CreateMap<Student, StudentMemberDto>();
             CreateMap<StudentClass, StudentClassDto>();
+            CreateMap<Class, ClassDto>();
 
+            CreateMap<BaseQuestion, BaseQuestionDto>();
 
 
 

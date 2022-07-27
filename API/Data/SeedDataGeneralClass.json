@@ -1,17 +1,17 @@
 [
   {
     "ClassLevel": 5,
-    "Name": "Sistemas Operativos",
+    "GeneralClassName": "Sistemas Operativos",
     "Course": "Informática"
   },
   {
     "ClassLevel": 4,
-    "Name": "Electrónica Digital",
+    "GeneralClassName": "Electrónica Digital",
     "Course": "Informática"
   },
   {
     "ClassLevel": 6,
-    "Name": "Aprendizaje Automático",
+    "GeneralClassName": "Aprendizaje Automático",
     "Course": "Informática"
   }
 ]

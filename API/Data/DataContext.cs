@@ -18,6 +18,8 @@ namespace API.Data
         public DbSet<Class> Classes { get; set; }
 
         public DbSet<StudentClass> StudentClasses { get; set; }
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<BaseQuestion> BaseQuestions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -31,6 +33,16 @@ namespace API.Data
                 .WithMany(c => c.StudentClasses)
                 .HasForeignKey(s => s.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ClassTest>()
+                .HasKey(k => new { k.ClassId, k.TestId });
+
+            builder.Entity<ClassTest>()
+                .HasOne(s => s.Class)
+                .WithMany(t => t.ClassTests)
+                .HasForeignKey(s => s.ClassId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
 
 

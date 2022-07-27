@@ -36,7 +36,7 @@ namespace API.Data
         public async Task<IEnumerable<Student>> GetStudentsAsync()
         {
             return await _context.Students.Include(c => c.StudentClasses).
-                ThenInclude(c => c.Class).ThenInclude(g => g.GeneralClass).ToListAsync();
+                ThenInclude(c => c.Class).ThenInclude(c => c.GeneralClass).ToListAsync();
         }
 
         public async Task<StudentMemberDto> GetStudentMemberByUsernameAsync(string username)

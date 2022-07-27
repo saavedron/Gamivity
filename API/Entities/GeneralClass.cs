@@ -11,6 +11,7 @@ namespace API.Entities
         public string Course { get; set; }
 
         public ICollection<Class> Classes { get; set; }
+        public ICollection<BaseQuestion> BaseQuestions { get; set; }
 
 
     }
