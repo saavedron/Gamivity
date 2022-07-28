@@ -15,7 +15,7 @@ namespace API.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public string Name { get; set; }
-
+        public int CurrentLevel { get; set; }
         public ICollection<StudentClass> StudentClasses { get; set; }
 
 

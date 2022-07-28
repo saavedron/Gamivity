@@ -14,9 +14,8 @@ namespace API.Entities
         public ICollection<Answer> Answers { get; set; }
         public string Feedback { get; set; }
 
-
-        public TestQuestion TestQuestion { get; set; }
         public GeneralClass GeneralClass { get; set; }
         public int GeneralClassId { get; set; }
+        public ICollection<TestQuestion> TestQuestions { get; set; }
     }
 }

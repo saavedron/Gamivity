@@ -2,16 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Entities;
 
 namespace API.DTOs
 {
-    public class BaseQuestionDto
+    public class AnswerDto
     {
         public int Id { get; set; }
         public string Body { get; set; }
-        public ICollection<AnswerDto> Answers { get; set; }
-        public string Feedback { get; set; }
-
+        public bool IsRight { get; set; }
     }
 }

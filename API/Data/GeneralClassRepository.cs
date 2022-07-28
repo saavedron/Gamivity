@@ -16,6 +16,12 @@ namespace API.Data
             _context = context;
 
         }
+
+        public async Task<GeneralClass> GetByNameAsync(string generalClassName)
+        {
+            return await _context.GeneralClasses.SingleOrDefaultAsync(g => g.GeneralClassName == generalClassName);
+        }
+
         public async Task<GeneralClass> GetGeneralClassByIdAsync(int generalClassId)
         {
             return await _context.GeneralClasses.FirstOrDefaultAsync(g => g.Id == generalClassId);

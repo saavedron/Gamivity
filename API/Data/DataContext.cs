@@ -34,6 +34,7 @@ namespace API.Data
                 .HasForeignKey(s => s.StudentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            
             builder.Entity<ClassTest>()
                 .HasKey(k => new { k.ClassId, k.TestId });
 
@@ -42,6 +43,8 @@ namespace API.Data
                 .WithMany(t => t.ClassTests)
                 .HasForeignKey(s => s.ClassId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            
 
         }
 

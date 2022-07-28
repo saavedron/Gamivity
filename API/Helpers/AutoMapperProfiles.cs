@@ -19,6 +19,7 @@ namespace API.Helpers
             CreateMap<Class, ClassDto>();
 
             CreateMap<BaseQuestion, BaseQuestionDto>();
+            CreateMap<Answer, AnswerDto>();
 
 
 

@@ -9,6 +9,10 @@ namespace API.Entities
     {
         public int Id { get; set; }
         public int TimeToFinish { get; set; } //change
+
+        public Test Test { get; set; }
+        public int TestId { get; set; }
+
         public BaseQuestion BaseQuestion { get; set; }
         public int BaseQuestionId { get; set; }
 

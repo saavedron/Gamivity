@@ -8,8 +8,8 @@ namespace API.Entities
     public class Test
     {
         public int Id { get; set; }
-        public int Gamipoints { get; set; }
-      
+        public bool AllowPowerUps { get; set; }
+
         public ICollection<TestQuestion> TestQuestions { get; set; }
     }
 }

@@ -9,5 +9,7 @@ namespace API.Interfaces
     public interface IGeneralClassRepository
     {
         Task<GeneralClass> GetGeneralClassByIdAsync(int generalClassId);
+        Task<GeneralClass> GetByNameAsync(string generalClassName);
+
     }
 }

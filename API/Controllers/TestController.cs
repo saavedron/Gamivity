@@ -14,38 +14,51 @@ namespace API.Controllers
         private readonly IClassesRepository _classesRepository;
         private readonly ITestRepository _testRepository;
         private readonly IGeneralClassRepository _generalClassRepository;
-        public TestController(IClassesRepository classesRepository, ITestRepository testRepository, IGeneralClassRepository generalClassRepository)
+        private readonly IBaseQuestionRepository _baseQuestionRepository;
+        public TestController(IClassesRepository classesRepository, ITestRepository testRepository, IGeneralClassRepository generalClassRepository, IBaseQuestionRepository baseQuestionRepository)
         {
+            _baseQuestionRepository = baseQuestionRepository;
             _generalClassRepository = generalClassRepository;
             _testRepository = testRepository;
             _classesRepository = classesRepository;
 
         }
 
-        [HttpPost("addTest")]
-        public async Task<ActionResult> AddTestToClass(AddTestDto testPayload)
+
+        [HttpPost("add")]
+        public async Task<ActionResult> AddTest(AddTestDto testPayload)
         {
-
             var _class = await _classesRepository.GetClassByName(testPayload.ClassName);
+            var generalClass = await _generalClassRepository.GetGeneralClassByIdAsync(_class.Id);
 
-            var generalClass = await _generalClassRepository.GetGeneralClassByIdAsync(_class.GeneralClassId);
-
-            List<BaseQuestion> baseQuestions = new List<BaseQuestion>();
-
-            foreach (var t in testPayload.Test.TestQuestions)
+            List<TestQuestion> testQuestions = new List<TestQuestion>();
+            foreach (var tq in testPayload.Test.TestQuestions)
             {
-                //if the question doesn't exists in the db already
-                if (t.Id == 0)
-                    baseQuestions.Add(t.BaseQuestion);
+                var bq = tq.BaseQuestion;
+                //if base question doesn't exist in the db already
+                if (bq.Id == 0)
+                {
+                    bq.GeneralClass = generalClass;
+                    testQuestions.Add(new TestQuestion
+                    {
+                        TimeToFinish = tq.TimeToFinish,
+                        BaseQuestion = bq
+                    });
+                }
+                else
+                {
+                    testQuestions.Add(new TestQuestion
+                    {
+                        TimeToFinish = tq.TimeToFinish,
+                        BaseQuestionId = bq.Id
+                    }
+                    );
+                }
             }
-            generalClass.BaseQuestions = baseQuestions;
-
-            await _classesRepository.UpdateAndSaveGeneralClass(generalClass);
-
 
             var test = new Test
             {
-                TestQuestions = testPayload.Test.TestQuestions
+                TestQuestions = testQuestions
             };
 
             _testRepository.AddTest(test);
@@ -65,6 +78,7 @@ namespace API.Controllers
             return BadRequest("Failed to add test to class");
 
         }
+
 
         [HttpGet("getBaseQuestions/{generalClassName}")]
         public async Task<ActionResult<IEnumerable<BaseQuestionDto>>> GetQuestions(string generalClassName)

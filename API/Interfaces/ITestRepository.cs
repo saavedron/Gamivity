@@ -14,6 +14,6 @@ namespace API.Interfaces
 
         Task<IEnumerable<BaseQuestionDto>> GetBaseQuestions(string generalClassName);
 
-        // Task<Test> GetTest();
+
     }
 }
